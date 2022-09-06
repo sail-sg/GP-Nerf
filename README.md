@@ -91,6 +91,7 @@ We have provided two pretrained weights files and the corresponding training log
 
 ### Acknowledgement
 - [Neuralbody](https://github.com/zju3dv/neuralbody)
+- [SparseConv](https://github.com/traveller59/spconv)
 
 
 ### BibTex
