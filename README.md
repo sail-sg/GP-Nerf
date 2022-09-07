@@ -58,7 +58,7 @@ pip install yacs
 
 Train on ZJU-Mocap dataset, eval on ZJU-Mocap dataset:
 
-`CUDA_VISIBLE_DEVICES=0 python tools/demo.py -cfg configs/trainzju_valzju.yaml`
+`CUDA_VISIBLE_DEVICES=0 python tools/train.py -cfg configs/trainzju_valzju.yaml`
 
 Train on THuman dataset, eval on ZJU-Mocap dataset:
 
