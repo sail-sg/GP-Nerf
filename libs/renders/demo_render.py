@@ -291,10 +291,12 @@ class Renderer(nn.Module):
         torch.cuda.synchronize()
         start_time = time.time()
 
+        # SparseConv + Density Network
         sigma_feat, globalfeat = self.nerfhead.sigmahead.test_forward(
             sp_input, grid_coords, rgb_feat, mask
         )  # update
-        sigma_x = globalfeat.squeeze(2)
+        sigma_x = globalfeat.squeeze(2) # sigma_feat and mean,var
+        # Density MLP
         sigma = self.nerfhead.rgbhead.out_geometry_fc(sigma_x)
         num_valid_obs = torch.sum(mask, dim=2)
         sigma = sigma.masked_fill(
@@ -320,6 +322,7 @@ class Renderer(nn.Module):
             time_slots["bf_rgb"] = bc_time
             torch.cuda.synchronize()
             start_time = time.time()
+            # Apperance MLP with mask
             rgb_in, rgb_out, sigma_out = self.nerfhead.rgbhead(rgb_feat, sigma_feat[valid1], mask[valid1])
             raw = torch.cat([rgb_out, sigma_out], dim=-1)
             torch.cuda.synchronize()
@@ -328,8 +331,8 @@ class Renderer(nn.Module):
             torch.cuda.synchronize()
             start_time = time.time()
 
+            # Ray integral
             rgb = raw[:, :, :3]  # [N_rays, N_samples, 3]
-
             hold_rgb = torch.zeros((hold_len * sample_num, 3)).to(device)
             hold_alpha = torch.zeros((hold_len * sample_num)).to(device)
             hold_rgb[valid[valid1]] = rgb[:, 0, :]

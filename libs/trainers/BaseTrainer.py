@@ -112,7 +112,7 @@ class Trainer(object):
         print_freq = self.cfg.train.print_freq
         eval_data_iter = data_loop(eval_loader)
         if self.epoch > self.max_epoch:
-            logging.info("Optimization is done !")
+            logging.info("Optimization is done!")
             sys.exit(0)
         for data in metric_logger.log_every(train_loader, print_freq, header, self.logger):
             data = self._read_inputs(data)

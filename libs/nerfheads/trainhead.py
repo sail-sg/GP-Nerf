@@ -59,7 +59,8 @@ class NeRFSigmaHead(nn.Module):
         return sigma_feat
 
     def test_forward(self, sp_input, grid_coords, rgb_feat, mask):
-        # import pdb; pdb.set_trace()
+        # SparseConv + mean,var, used in rendering
+        # here we need unmasked sigma, RBGHead.forward() is for masked sigma, so some codes is redundant.
         grid_coords = grid_coords[:, None, None].float()
         xyzc_features = self.xyzc_net(
             sp_input["xyzc"], grid_coords
