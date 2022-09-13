@@ -1,5 +1,6 @@
 ## GP-NeRF: Geometry-Guided Progressive NeRF for Generalizable and Efficient Neural Human Rendering (ECCV2022)
 
+[Paper](https://arxiv.org/abs/2112.04312)
 
 ### ENV
 
