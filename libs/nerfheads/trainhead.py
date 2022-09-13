@@ -59,8 +59,6 @@ class NeRFSigmaHead(nn.Module):
         return sigma_feat
 
     def test_forward(self, sp_input, grid_coords, rgb_feat, mask):
-        # SparseConv + mean,var, used in rendering
-        # here we need unmasked sigma, RBGHead.forward() is for masked sigma, so some codes is redundant.
         grid_coords = grid_coords[:, None, None].float()
         xyzc_features = self.xyzc_net(
             sp_input["xyzc"], grid_coords
@@ -83,8 +81,7 @@ class NeRFRGBHead(nn.Module):
     '''
     def __init__(self, in_feat_ch=32):
         super(NeRFRGBHead, self).__init__()
-        
-        # The following three modules: base_fc, vis_fc, and rgb_fc, correspond to the Appearance MLP in Fig. 2 of the paper
+       
         self.base_fc = nn.Sequential(
                                      nn.Linear((in_feat_ch+3)*3, 64),
                                      nn.ELU(inplace=True),
@@ -102,7 +99,6 @@ class NeRFRGBHead(nn.Module):
                                     nn.ELU(inplace=True),
                                     nn.Linear(16, 3))
         
-        # out_geometry_fc corresponds to the Density MLP in Fig. 2 of the paper
         self.out_geometry_fc = nn.Sequential(
                                              nn.Linear(64+(in_feat_ch+3)*2, 64),
                                              nn.ELU(inplace=True),
