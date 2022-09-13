@@ -25,6 +25,9 @@ def fused_mean_variance(x):
 
 
 class NeRFSigmaHead(nn.Module):
+    ''' This module correponds to Part-(a) in Fig. 2 of the paper (https://arxiv.org/pdf/2112.04312.pdf), 
+        i.e., Geometry-guided Multi-view Feature Integration
+    '''
     def __init__(self, in_feat_ch=32, n_smpl=6890, code_dim=16, attn_n_heads=4,
                  spconv_n_layers=4, spconv_out_dim=[32, 32, 32, 32]):
         super(NeRFSigmaHead, self).__init__()
@@ -75,8 +78,12 @@ class NeRFSigmaHead(nn.Module):
 
 
 class NeRFRGBHead(nn.Module):
+    ''' This module correponds to Part-(b) and Part-(c) in Fig. 2 of the paper
+    '''
     def __init__(self, in_feat_ch=32):
         super(NeRFRGBHead, self).__init__()
+        
+        # The following three modules: base_fc, vis_fc, and rgb_fc, correspond to the Appearance MLP in Fig. 2 of the paper
         self.base_fc = nn.Sequential(
                                      nn.Linear((in_feat_ch+3)*3, 64),
                                      nn.ELU(inplace=True),
@@ -93,7 +100,8 @@ class NeRFRGBHead(nn.Module):
                                     nn.Linear(32, 16),
                                     nn.ELU(inplace=True),
                                     nn.Linear(16, 3))
-
+        
+        # out_geometry_fc corresponds to the Density MLP in Fig. 2 of the paper
         self.out_geometry_fc = nn.Sequential(
                                              nn.Linear(64+(in_feat_ch+3)*2, 64),
                                              nn.ELU(inplace=True),
