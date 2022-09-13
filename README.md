@@ -99,7 +99,7 @@ Please cite this paper if you find the code/model helpful in your research:
 ```
 @inproceedings{chen2022gpnerf,
 	title={Geometry-guided progressive NeRF for generalizable and efficient neural human rendering},
-	author={Chen, Mingfei and Zhang, Jianfeng and Xu, Xiangyu and Liu, Lijuan and Feng, Jiashi and Cai, Yujun and Yan, Shuicheng},
+	author={Chen, Mingfei and Zhang, Jianfeng and Xu, Xiangyu and Liu, Lijuan and Cai, Yujun and Feng, Jiashi and Yan, Shuicheng},
 	booktitle={ECCV},
 	year={2022}
 }
