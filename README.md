@@ -35,7 +35,7 @@ pip install spconv-1.2.1-cp36-cp36m-linux_x86_64.whl
 2. Docker-based:
 ```
 docker pull caiyj/neuralbody:imi-server
-# if there's any problem with spconv, try the following command
+# if there's any problem with spconv, try the following commands
 cd ~/spconv
 python setup.py bdist_wheel
 cd dist
